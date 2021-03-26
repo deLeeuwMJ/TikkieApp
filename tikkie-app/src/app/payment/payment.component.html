@@ -1,0 +1,31 @@
+<mat-card class="payment-card">
+
+  <mat-card-header>
+    <mat-card-title>Betalen</mat-card-title>
+    <mat-card-subtitle>Betaal hier je Tikkie</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <form class="card-form">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+            <input matInput placeholder="Voer hier een naam in" type="text" name="Naam" required>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Voor hier het bedrag in" type="number" name="Inleg" required>
+        </mat-form-field>
+      </td>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button (click)="add()" color="primary">Voeg toe</button>
+    <button mat-raised-button (click)="reset()" color="primary">Reset</button>
+  </mat-card-actions>
+
+</mat-card>
