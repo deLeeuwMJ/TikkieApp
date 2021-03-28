@@ -1,37 +1,29 @@
 <div class="card-container" >
-  <mat-card class="who-payed-card">
+  <mat-card class="overview-card">
 
     <mat-card-header class="who-payed-card-header-text">
-      <mat-card-title>Betaald</mat-card-title>
-      <mat-card-subtitle>Wie heeft wat betaald.</mat-card-subtitle>
+      <mat-card-title>Overzicht</mat-card-title>
+      <mat-card-subtitle>In dit overzicht zie je alle informatie betreft de ingevulde transactie code.<br><br></mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
-      </p>
+
+      <h3>Betaald</h3>
+      <p>Wie heeft wat betaald.</p>
+      <br>
+
+      <app-accordion *ngFor="let payment of paymentResult$| async; index as i">
+          <app-accordion-item title={{payment.fullName}} amount={{payment.amount}} date={{payment.dateAdded}}></app-accordion-item>
+      </app-accordion>
+
+      <h3>Verzoekjes</h3>
+      <p>Wat is er betaald.</p>
+      <br>
+
+      <app-accordion *ngFor="let request of requestResult$| async; index as i">
+        <app-accordion-item title={{request.senderName}}.{{request.receiverName}}  amount={{request.amount}} date={{request.dateAdded}}></app-accordion-item>
+      </app-accordion>
+
     </mat-card-content>
-
-  </mat-card>
-
-  <mat-card class="pay-requests-card">
-
-    <mat-card-header>
-      <mat-card-title>Verzoekjes</mat-card-title>
-      <mat-card-subtitle>Wat is er betaald.</mat-card-subtitle>
-    </mat-card-header>
-
-    <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
-      </p>
-    </mat-card-content>
-
   </mat-card>
 </div>
-
-<pre> {{(result$|async)|json}} </pre>

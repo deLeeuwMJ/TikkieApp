@@ -1,31 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ITransaction } from '../model/transactions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionsService {
-
-  // URL which returns list of JSON items (API end-point URL)
   private readonly URL = 'http://tikkie.mocklab.io/v1/transactions';
 
   constructor(private http: HttpClient) { }
 
-  // create a method named: resolveItems()
-  // this method returns list-of-items in form of Observable
-  // every HTTTP call returns Observable object
   resolveItems(): Observable<any> {
-    console.log('Get request is sent!');
-    // this.http is a HttpClient library provide by @angular/common
-    // we are calling .get() method over this.http object
-    // this .get() method takes URL to call API
+    console.log('ALL Get request is sent!');
     return this.http.get(this.URL);
+  }
+
+  resolveItem(id: String): Observable<ITransaction> {
+    console.log('INDIVIDUAL Get request is sent!');
+    return this.http.get<ITransaction>(this.URL + "/" + id);
   }
 
   postItem(): Observable<any> {
     console.log('Post request is sent!');
-    // Using the POST method
     const headers =  {
       headers: new  HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'})

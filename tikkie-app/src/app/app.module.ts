@@ -16,6 +16,7 @@ import { UtilityService } from './service/utility.service';
 import { TransactionsService } from './service/transactions.service';
 
 import { HttpClientModule } from '@angular/common/http'
+import { AccordionModule } from './accordion/accordion.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http'
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AccordionModule
   ],
   providers: [UtilityService, TransactionsService],
   bootstrap: [AppComponent]

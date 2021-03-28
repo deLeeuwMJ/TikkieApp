@@ -1,19 +1,21 @@
-.who-payed-card {
-  max-width: 400px;
+.overview-card {
   margin-top: 167px;
   background: #f5f8fa;
+  display: inline-table;
   padding: 25px;
-  display: inline-block;
-  margin-inline: 10px;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
-.pay-requests-card {
-  max-width: 400px;
-  margin-top: 167px;
-  background: #f5f8fa;
-  padding: 25px;
-  display: inline-block;
-  margin-inline: 10px;
+table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+tr {
+  display: flex;
+  justify-content: space-between;
 }
 
 mat-card::ng-deep.mat-card-header-text {
