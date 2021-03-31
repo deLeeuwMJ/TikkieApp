@@ -9,14 +9,14 @@ import { UtilityService } from './service/utility.service';
 
 export class AppComponent implements OnInit{
   title = 'tikkie-app';
-  id!: String;
+  id!: string;
 
-  constructor(private util:UtilityService){}
+  constructor(private util: UtilityService){}
 
   ngOnInit(): void {
     this.util.transactionId$.subscribe(id => {
       this.id = id;
     });
-    this.util.setTransactionId(window.location.pathname.replace(/^\/([^/]*).*$/, "$1"));
+    this.util.setTransactionId(window.location.pathname.replace(/^\/([^/]*).*$/, '$1'));
   }
 }

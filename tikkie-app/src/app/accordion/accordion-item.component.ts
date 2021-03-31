@@ -28,22 +28,22 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class AccordionItemComponent implements OnInit {
 
   @Input()
-  title: string = "Transactie";
+  title = 'Transactie';
 
   @Input()
-  date: string = "10-12-2021";
+  date = '10-12-2021';
 
   @Input()
-  amount: string = "50.0";
+  description = 'Voor het eten bij het restaurant.';
 
   showBody = false;
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  toggle() {
+  toggle(): void {
     this.showBody = !this.showBody;
   }
 

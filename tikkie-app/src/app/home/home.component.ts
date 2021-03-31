@@ -26,6 +26,6 @@ export class HomeComponent implements OnInit {
     console.log('Typed in ID', this.transactionFormControl.value);
     this.util.setTransactionId(this.transactionFormControl.value);
 
-    this.router.navigate([this.transId, "overview"]);
+    this.router.navigate([this.transId, 'overview']);
   }
 }

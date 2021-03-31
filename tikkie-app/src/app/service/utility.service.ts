@@ -6,10 +6,10 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 })
 export class UtilityService {
 
-  transactionId: BehaviorSubject<string> = new BehaviorSubject("");
+  transactionId: BehaviorSubject<string> = new BehaviorSubject('');
   transactionId$ = this.transactionId.asObservable();
 
-  setTransactionId(id: string) {
+  setTransactionId(id: string): void {
     this.transactionId.next(id);
   }
 }

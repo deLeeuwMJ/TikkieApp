@@ -8,14 +8,14 @@ import { SharedModule } from './shared/shared.module';
 import { OverviewComponent } from './overview/overview.component';
 import { PaymentComponent } from './payment/payment.component';
 import { HomeComponent } from './home/home.component';
-import { TransactionsComponent } from './transactions/transactions.component'
+import { TransactionsComponent } from './transactions/transactions.component';
 
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { UtilityService } from './service/utility.service';
 import { TransactionsService } from './service/transactions.service';
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { AccordionModule } from './accordion/accordion.module';
 
 @NgModule({

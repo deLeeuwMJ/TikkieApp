@@ -16,21 +16,34 @@ export class TransactionsService {
     return this.http.get(this.URL);
   }
 
-  resolveItem(id: String): Observable<ITransaction> {
+  resolveItem(id: string): Observable<ITransaction> {
     console.log('INDIVIDUAL Get request is sent!');
-    return this.http.get<ITransaction>(this.URL + "/" + id);
+    return this.http.get<ITransaction>(this.URL + '/' + id);
   }
 
   postItem(): Observable<any> {
-    console.log('Post request is sent!');
+    console.log('NEW Post request is sent!');
     const headers =  {
       headers: new  HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'})
     };
     return this.http.post(this.URL,
     {
-      'email' : 'ankit.codechintan@gmail.com'
+      email : 'ankit.codechintan@gmail.com'
     },
-    headers)
+    headers);
+  }
+
+  reset(): Observable<any> {
+    console.log('RESET Post request is sent!');
+    const headers =  {
+      headers: new  HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'})
+    };
+    return this.http.post(this.URL,
+    {
+      email : 'ankit.codechintan@gmail.com'
+    },
+    headers);
   }
 }

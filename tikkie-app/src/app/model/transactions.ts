@@ -8,6 +8,7 @@ export interface IPayment {
   fullName: string;
   dateAdded: string;
   amount: number;
+  description: string;
 }
 
 export interface IRequest {
@@ -15,4 +16,5 @@ export interface IRequest {
   receiverName: string;
   dateAdded: string;
   amount: number;
+  description: string;
 }

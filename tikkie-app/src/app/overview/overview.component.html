@@ -13,15 +13,21 @@
       <br>
 
       <app-accordion *ngFor="let payment of paymentResult$| async; index as i">
-          <app-accordion-item title={{payment.fullName}} amount={{payment.amount}} date={{payment.dateAdded}}></app-accordion-item>
+          <app-accordion-item title={{generateAccordionTitle(payment)}} description={{payment.description}} date={{payment.dateAdded}}></app-accordion-item>
       </app-accordion>
+
+      <br>
+      <i>Totaal is er voor <b>€</b></i>
+      <i><b>{{totalAmount}}</b></i>
+      <i> verbrast.</i>
+      <br><br>
 
       <h3>Verzoekjes</h3>
       <p>Wat is er betaald.</p>
       <br>
 
       <app-accordion *ngFor="let request of requestResult$| async; index as i">
-        <app-accordion-item title={{request.senderName}}.{{request.receiverName}}  amount={{request.amount}} date={{request.dateAdded}}></app-accordion-item>
+        <app-accordion-item title={{generateAccordionTitle(request)}}  description={{request.description}} date={{request.dateAdded}}></app-accordion-item>
       </app-accordion>
 
     </mat-card-content>
