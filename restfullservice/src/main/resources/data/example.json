@@ -26,6 +26,4 @@
     ]
   }
 
-  { "code":"258wes", "sname":"Miquel de Leeuw", "cdate":"2021-01-03", "amount":50.0 }
-
   curl -X POST --location "http://localhost:8080/transactions/create" -H "Content-Type: application/json" -d "{ \"id\":\"1912f8a3-22c7-4be2-a421-a23eceb834fa\", \"code\":\"qwer12\", \"sname\":\"Justen de Leeuw\", \"cdate\":\"2021-02-03\", \"amount\":10.0 }"
