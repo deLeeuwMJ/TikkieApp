@@ -22,15 +22,4 @@ interface TransactionRepository : CrudRepository<Transaction, String>{
     @Query("SELECT * FROM transactions t WHERE t.transaction_code = :gcode")
     fun findTransactionByCode(@Param("gcode") givenCode: String): Transaction
 
-    @Query("SELECT * FROM payments")
-    fun findPayments(): List<Payment>
-
-    @Query("SELECT * FROM payments p WHERE p.transaction_id = :id")
-    fun findPaymentsById(@Param("id") id: Int): List<Payment>
-
-    @Query("SELECT * FROM requests")
-    fun findRequests(): List<Request>
-
-    @Query("SELECT * FROM requests r WHERE r.transaction_id = :id")
-    fun findRequestsById(@Param("id") id: Int): List<Request>
 }

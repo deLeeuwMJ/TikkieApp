@@ -1,0 +1,8 @@
+TRANSACTIONS
+curl -X POST --location "http://localhost:8080/transactions/create" -H "Content-Type: application/json" -d "{ \"transaction_code\":\"adfs8\", \"transaction_description\":\"Openbaar vervoer.\"}"
+
+PAYMENTS
+curl -X POST --location "http://localhost:8080/payments/create" -H "Content-Type: application/json" -d "{ \"transaction_id\":3, \"payment_sender_name\":\"Miquel de Leeuw\", \"payment_creation_date\":\"03-02-2021\", \"payment_amount\":15.0 }"
+
+REQUESTS
+curl -X POST --location "http://localhost:8080/requests/create" -H "Content-Type: application/json" -d "{ \"transaction_id\":3, \"request_sender_name\":\"Miquel de Leeuw\", \"request_receiver_name\":\"Justen de Leeuw\", \"request_creation_date\":\"03-02-2021\", \"request_amount\":5.0 }"

@@ -67,7 +67,19 @@ class TransactionController(val service: TransactionService) {
 
     @PostMapping("/transactions/create")
     @ResponseStatus(HttpStatus.CREATED)
-    fun post(@RequestBody transaction: Transaction) {
-        service.post(transaction)
+    fun postTransaction(@RequestBody transaction: Transaction) {
+        service.postTransaction(transaction)
+    }
+
+    @PostMapping("/payments/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun postPayment(@RequestBody payment: Payment) {
+        service.postPayment(payment)
+    }
+
+    @PostMapping("/requests/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun postRequest(@RequestBody request: Request) {
+        service.postRequest(request)
     }
 }

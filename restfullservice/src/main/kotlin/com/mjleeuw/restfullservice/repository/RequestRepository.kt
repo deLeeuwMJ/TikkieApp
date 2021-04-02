@@ -8,16 +8,16 @@ import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.dao.IncorrectResultSizeDataAccessException
 
 import com.mjleeuw.restfullservice.model.Transaction
-import com.mjleeuw.restfullservice.model.Payment
+import com.mjleeuw.restfullservice.model.Request
 import com.mjleeuw.restfullservice.services.TransactionService
 
-interface PaymentRepository : CrudRepository<Payment, String>{
+interface RequestRepository : CrudRepository<Request, String>{
 
     // Get requests
+    
+    @Query("SELECT * FROM requests")
+    fun findRequests(): List<Request>
 
-    @Query("SELECT * FROM payments")
-    fun findPayments(): List<Payment>
-
-    @Query("SELECT * FROM payments p WHERE p.transaction_id = :id")
-    fun findPaymentsById(@Param("id") id: Int): List<Payment>
+    @Query("SELECT * FROM requests r WHERE r.transaction_id = :id")
+    fun findRequestsById(@Param("id") id: Int): List<Request>
 }
