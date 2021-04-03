@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS PAYMENTS (
     transaction_id INT,
     payment_sender_name VARCHAR(70),
     payment_creation_date VARCHAR(32),
+    payment_description VARCHAR(140),
     payment_amount DOUBLE,
     FOREIGN KEY (transaction_id) REFERENCES TRANSACTIONS(transaction_id)
 );
@@ -19,6 +20,7 @@ CREATE TABLE IF NOT EXISTS REQUESTS (
     request_sender_name VARCHAR(70),
     request_receiver_name VARCHAR(70),
     request_creation_date VARCHAR(32),
+    request_description VARCHAR(140),
     request_amount DOUBLE,
     FOREIGN KEY (transaction_id) REFERENCES TRANSACTIONS(transaction_id)
 );

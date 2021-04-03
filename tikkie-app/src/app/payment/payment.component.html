@@ -11,21 +11,21 @@
         <tr>
           <td>
             <mat-form-field class="example-full-width">
-            <input matInput placeholder="Naam" type="text" name="Naam" required>
+            <input matInput [formControl] = "nameFormControl" placeholder="Naam" type="text" name="Naam" required>
             </mat-form-field>
           </td>
         </tr>
         <tr>
           <td>
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Bedrag" type="number" name="Inleg" required>
+              <input matInput [formControl] = "amountFormControl" placeholder="Bedrag" type="number" name="Inleg" required>
             </mat-form-field>
           </td>
         </tr>
         <tr>
           <td>
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Omschrijving" type="text" name="Beschrijving" required>
+              <input matInput [formControl] = "descriptionFormControl" placeholder="Omschrijving" type="text" name="Beschrijving" required>
             </mat-form-field>
           </td>
         </tr>

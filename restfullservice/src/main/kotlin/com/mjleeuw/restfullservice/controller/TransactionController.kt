@@ -12,6 +12,7 @@ class TransactionController(val service: TransactionService) {
 
     // Get request
 
+    @CrossOrigin("http://localhost:4200")
     @RequestMapping("/")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun invalidPath() : ErrorResponse{
@@ -21,6 +22,7 @@ class TransactionController(val service: TransactionService) {
             );
     }
 
+    @CrossOrigin("http://localhost:4200")
     @RequestMapping("/{id}")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun invalidSpecificPath() : ErrorResponse{
@@ -30,10 +32,12 @@ class TransactionController(val service: TransactionService) {
             );
     }
     
+    @CrossOrigin("http://localhost:4200")
     @GetMapping("/transactions")
     @ResponseStatus(HttpStatus.OK)
     fun getTransactions(): List<Transaction> = service.findTransactions()
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping("/transactions/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getTransactionByCode(@PathVariable("id") code: String): Any {
@@ -41,10 +45,12 @@ class TransactionController(val service: TransactionService) {
         return transaction
     }
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping("/payments")
     @ResponseStatus(HttpStatus.OK)
     fun getPayments(): List<Payment> = service.findPayments()
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping("/payments/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getPaymentsById(@PathVariable("id") code: String): Any {
@@ -52,10 +58,12 @@ class TransactionController(val service: TransactionService) {
         return payments
     }
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping("/requests")
     @ResponseStatus(HttpStatus.OK)
     fun getRequests(): List<Request> = service.findRequests()
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping("/requests/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getRequestsById(@PathVariable("id") code: String): Any {
@@ -65,21 +73,31 @@ class TransactionController(val service: TransactionService) {
 
     // Post request
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping("/transactions/create")
     @ResponseStatus(HttpStatus.CREATED)
     fun postTransaction(@RequestBody transaction: Transaction) {
         service.postTransaction(transaction)
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping("/payments/create")
     @ResponseStatus(HttpStatus.CREATED)
     fun postPayment(@RequestBody payment: Payment) {
         service.postPayment(payment)
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping("/requests/create")
     @ResponseStatus(HttpStatus.CREATED)
     fun postRequest(@RequestBody request: Request) {
         service.postRequest(request)
+    }
+
+    @CrossOrigin("http://localhost:4200")
+    @PostMapping("/payments/reset") 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    fun postAction(@RequestBody code: String) {
+        service.postReset(code)
     }
 }

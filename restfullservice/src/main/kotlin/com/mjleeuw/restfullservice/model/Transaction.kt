@@ -18,6 +18,7 @@ data class Payment(
     val transaction_id: Int,
     val payment_sender_name: String,
     val payment_creation_date: String,
+    val payment_description: String,
     val payment_amount: Double
 )
 
@@ -28,5 +29,6 @@ data class Request(
     val request_sender_name: String,
     val request_receiver_name: String,
     val request_creation_date: String,
+    val request_description: String,
     val request_amount: Double
 )

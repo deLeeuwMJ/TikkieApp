@@ -49,4 +49,11 @@ class TransactionService(val transactionRepo: TransactionRepository, val payment
     fun postRequest(request: Request) {
         requestRepo.save(request)
     }
+
+    fun postReset(code: String) {
+        println("Given code: " + code)
+        var transaction: Transaction = findTransactionByCode(code)
+        println("Given id: " + transaction.transaction_id)
+        paymentRepo.resetPayments(transaction.transaction_id)
+    }
 }

@@ -8,15 +8,25 @@
   <mat-card-content>
 
     <form class="home-form">
-      <td>
-        <mat-form-field class="example-full-width">
-          <input matInput [formControl] = "transactionFormControl" placeholder="Bijv. 23safd902" type="text" name="transaction_id" required>
-        </mat-form-field>
-      </td>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <input matInput [formControl] = "transactionFormControl" placeholder="Transactie code" type="text" name="transaction_id" required>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <input matInput [formControl] = "descriptionFormControl" placeholder="Omschrijving" type="text" name="Beschrijving">
+          </mat-form-field>
+        </td>
+      </tr>
     </form>
   </mat-card-content>
 
   <mat-card-actions>
+    <button mat-raised-button (click)="create()" color="primary">Aanmaken</button>
     <button mat-raised-button (click)="lookup()" color="primary">Zoeken</button>
   </mat-card-actions>
 

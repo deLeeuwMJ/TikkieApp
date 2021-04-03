@@ -2,7 +2,7 @@
   <mat-card class="overview-card">
 
     <mat-card-header class="who-payed-card-header-text">
-      <mat-card-title>Overzicht</mat-card-title>
+      <mat-card-title>Overzicht - {{this.transDescription}} ({{this.transCode}})</mat-card-title>
       <mat-card-subtitle>In dit overzicht zie je alle informatie betreft de ingevulde transactie code.<br><br></mat-card-subtitle>
     </mat-card-header>
 
@@ -13,7 +13,7 @@
       <br>
 
       <app-accordion *ngFor="let payment of paymentResult$| async; index as i">
-          <app-accordion-item title={{generateAccordionTitle(payment)}} description={{payment.description}} date={{payment.dateAdded}}></app-accordion-item>
+          <app-accordion-item title={{generateAccordionTitle(payment)}} description={{payment.payment_description}} date={{payment.payment_creation_date}}></app-accordion-item>
       </app-accordion>
 
       <br>
@@ -21,14 +21,6 @@
       <i><b>{{totalAmount}}</b></i>
       <i> verbrast.</i>
       <br><br>
-
-      <h3>Verzoekjes</h3>
-      <p>Wat is er betaald.</p>
-      <br>
-
-      <app-accordion *ngFor="let request of requestResult$| async; index as i">
-        <app-accordion-item title={{generateAccordionTitle(request)}}  description={{request.description}} date={{request.dateAdded}}></app-accordion-item>
-      </app-accordion>
 
     </mat-card-content>
   </mat-card>
