@@ -67,7 +67,7 @@ class TransactionController(val service: TransactionService) {
     @GetMapping("/requests/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getRequestsById(@PathVariable("id") code: String): Any {
-        var requests: List<Request> = service.findRequestsById(code)
+        var requests: List<Request> = service.calculateTotalRequestsById(code)
         return requests
     }
 

@@ -22,6 +22,14 @@
       <i> verbrast.</i>
       <br><br>
 
+      <h3>Verzoekjes</h3>
+      <p>Wie moet wat aan wie betalen.</p>
+      <br>
+
+      <app-accordion *ngFor="let request of requestResult$| async; index as i">
+        <app-accordion-item title={{generateAccordionTitle(request)}}  description={{request.request_description}} date={{request.request_creation_date}}></app-accordion-item>
+      </app-accordion>
+
     </mat-card-content>
   </mat-card>
 </div>
