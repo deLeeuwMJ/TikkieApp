@@ -64,6 +64,9 @@ class TransactionService(
 
     fun calculateTotals(payments: List<Payment>): List<Request> {
 
+        /* No payments make sure its 0 */
+        if (payments.isEmpty()) return emptyList()
+
         /*
         Expenses per person
             Diederich   20.00
