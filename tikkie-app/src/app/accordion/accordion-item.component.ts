@@ -25,16 +25,17 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ])
   ]
 })
+
 export class AccordionItemComponent implements OnInit {
 
   @Input()
   title = 'Transactie';
 
   @Input()
-  date = '10-12-2021';
+  date = '10-12-2000';
 
   @Input()
-  description = 'Voor het eten bij het restaurant.';
+  description = 'Geen beschrijving opgegeven';
 
   showBody = false;
 

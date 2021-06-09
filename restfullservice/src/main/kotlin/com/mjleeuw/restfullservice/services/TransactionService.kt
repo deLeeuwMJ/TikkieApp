@@ -12,6 +12,7 @@ import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.math.roundToInt
 
 
 @Service
@@ -133,12 +134,12 @@ class TransactionService(
             requests.add(
                 Request(
                     -1,
-                    -1,
+                    payments.stream().filter{ from == it.payment_sender_name}.findFirst().orElse(null).transaction_id,
                     from,
                     to,
                     LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
-                    "Geen beschrijving opgegeven",
-                    Math.round(amount * 100.0) / 100.0
+                    payments.stream().filter{ from == it.payment_sender_name}.findFirst().orElse(null).payment_description,
+                    (amount * 100.0).roundToInt() / 100.0
                 )
             )
 
