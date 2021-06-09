@@ -1,152 +1,190 @@
 package com.mjleeuw.restfullservice.services
 
+import com.mjleeuw.restfullservice.model.Payment
+import com.mjleeuw.restfullservice.model.Request
+import com.mjleeuw.restfullservice.model.Transaction
+import com.mjleeuw.restfullservice.repository.PaymentRepository
+import com.mjleeuw.restfullservice.repository.RequestRepository
+import com.mjleeuw.restfullservice.repository.TransactionRepository
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.*
-
-import com.mjleeuw.restfullservice.model.*
-import com.mjleeuw.restfullservice.repository.*
-
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.math.BigDecimal 
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import kotlin.math.sign
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+
 
 @Service
-class TransactionService(val transactionRepo: TransactionRepository, val paymentRepo: PaymentRepository, val requestRepo: RequestRepository) {
+class TransactionService(
+    val transactionRepo: TransactionRepository,
+    val paymentRepo: PaymentRepository,
+    val requestRepo: RequestRepository
+) {
 
     // Get requests
 
     fun findTransactions(): List<Transaction> = transactionRepo.findTransactions()
 
     fun findTransactionByCode(code: String): Transaction {
-        println("Given code: " + code)
+        println("findTransactionByCode")
         return transactionRepo.findTransactionByCode(code)
     }
 
     fun findPayments(): List<Payment> = paymentRepo.findPayments()
 
     fun findPaymentsById(code: String): List<Payment> {
-        println("Given code: " + code)
-        var transaction: Transaction = findTransactionByCode(code)
-        println("Given id: " + transaction.transaction_code)
+        println("findPaymentsById")
+        val transaction: Transaction = findTransactionByCode(code)
+
+        println("Given id: ${transaction.transaction_id}")
         return paymentRepo.findPaymentsById(transaction.transaction_id)
     }
 
     fun findRequests(): List<Request> = requestRepo.findRequests()
 
     fun findRequestsById(code: String): List<Request> {
-        println("Given code: " + code)
-        var transaction: Transaction = findTransactionByCode(code)
-        println("Given id: " + transaction.transaction_id)
+        println("findRequestsById")
+        val transaction: Transaction = findTransactionByCode(code)
+
+        println("Given id: ${transaction.transaction_id}")
         return requestRepo.findRequestsById(transaction.transaction_id)
     }
 
     fun calculateTotalRequestsById(code: String): List<Request> {
-        println("Given code: " + code)
-        var transaction: Transaction = findTransactionByCode(code)
+        println("calculateTotalRequestsById")
+        val transaction: Transaction = findTransactionByCode(code)
+
+        /* Get all expenses per person in one list */
         println("Given id: " + transaction.transaction_code)
-        var payments: List<Payment> = paymentRepo.findPaymentsById(transaction.transaction_id)
+        val payments: List<Payment> = paymentRepo.findPaymentsById(transaction.transaction_id)
+
         return calculateTotals(payments)
     }
 
     fun calculateTotals(payments: List<Payment>): List<Request> {
-        var requestList: ArrayList<Request> = arrayListOf<Request>()
-        var amountSpent: Double = 0.0
-        var amountPeople: Int = payments.size
 
+        /*
+        Expenses per person
+            Diederich   20.00
+            Edwin       35.10
+            Wilco       8.00
+
+        Total spent
+                        63.10
+
+        Average cost
+                        21.03
+
+        Balance per person
+            Diederich   -1.03
+            Edwin       14.06
+            Wilco       -13.03
+
+        Steps in written down below
+
+        Wilco -> Edwin  13.03
+            Diederich   -1.03
+            Edwin       1.03
+            Wilco       0.00
+
+        Diederich -> Edwin 1.03
+            Diederich   0.00
+            Edwin       0.00
+            Wilco       0.00
+        */
+
+        /* Calculate total */
+        var amountSpent = .0
         payments.forEach {
             amountSpent += it.payment_amount
         }
 
-        println("Total spent: " + amountSpent + " with " + amountPeople + " people.")
+        val amountPeople: Int = payments.size
+        println("Total spent: $amountSpent with $amountPeople people")
 
-        var getCalculatedSharingExpense: Double = roundOffDecimal(amountSpent/amountPeople)
+        /* Calculate average cost */
+        val sharingExpense: Double = (amountSpent / amountPeople).roundDown()
+        println("Each people ownes: $sharingExpense")
 
-        println("Each people ownes: " + getCalculatedSharingExpense + " .")
-
-        var credList: ArrayList<Request> = arrayListOf<Request>()
-        var debtList: ArrayList<Request> = arrayListOf<Request>()
-
-        payments.forEach {
-            var amountOwnedToPot: Double = roundOffDecimal(getCalculatedSharingExpense - it.payment_amount)
-            println(it.payment_sender_name + " ownes " + amountOwnedToPot + " .")
-            // Kotlin sign checks if value is negative if -1.0 is answer
-            if (sign(amountOwnedToPot) == -1.0){
-                debtList.add(
-                    Request(
-                        -1,
-                        it.transaction_id,
-                        it.payment_sender_name,
-                        "Receiver name",
-                        LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
-                        "Geen beschrijving opgegeven",
-                        amountOwnedToPot
-                    )
-                )
-            } else {
-                credList.add(
-                    Request(
-                        -1,
-                        it.transaction_id,
-                        it.payment_sender_name,
-                        "Receiver name",
-                        LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
-                        "Geen beschrijving opgegeven",
-                        amountOwnedToPot
-                    )
-                )
-            }
+        /* Calculate balance per person */
+        val balance: HashMap<String, Double> = HashMap()
+        payments.forEach { payment ->
+            balance[payment.payment_sender_name] = (payment.payment_amount - sharingExpense).roundDown()
+            println("${payment.payment_sender_name} ownes: ${balance[payment.payment_sender_name]}")
         }
 
-        credList.forEach{
-            var totalAmountAvailable: Double = it.request_amount
+        /* Calculate balance per person */
+        var values = ArrayList(balance.values)
+        values.sort()
 
-            for (i in debtList.indices){
-                if (totalAmountAvailable > debtList[i].request_amount){
-                    requestList.add(
-                        Request(
-                            -1,
-                            debtList[i].transaction_id,
-                            it.request_sender_name,
-                            debtList[i].request_sender_name,
-                            LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
-                            "Geen beschrijving opgegeven",
-                            it.request_amount
-                        )
-                    )
-                    totalAmountAvailable = totalAmountAvailable - debtList[i].request_amount
-                }
+        val requests = arrayListOf<Request>()
+        while (Collections.frequency(values, 0.0) !== values.size) {
+            val from: String = getKey(balance, values[0])!!
+            val to: String = getKey(balance, values[amountPeople - 1])!!
+            val amount: Double = -values[0]
+
+            if (amount <= 0.01) {
+                break
             }
+
+            balance[to] = balance[to]!! - amount
+            balance[from] = 0.0
+
+            requests.add(
+                Request(
+                    -1,
+                    -1,
+                    from,
+                    to,
+                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE),
+                    "Geen beschrijving opgegeven",
+                    Math.round(amount * 100.0) / 100.0
+                )
+            )
+
+            values = ArrayList(balance.values)
+            values.sort()
         }
 
-        return requestList;
+        return requests
     }
 
-    fun roundOffDecimal(number: Double): Double {
+    private fun <K, V> getKey(map: Map<K, V>, value: V): K? {
+        for (key in map.keys) {
+            if (value == map[key]) {
+                return key
+            }
+        }
+        return null
+    }
+
+    private fun Double.roundDown(): Double {
         val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
-        return df.format(number).toDouble()
+        df.roundingMode = RoundingMode.DOWN
+        return df.format(this).toDouble()
     }
+
 
     // Post requests
-
     fun postTransaction(transaction: Transaction) {
+        println("postTransaction")
         transactionRepo.save(transaction)
     }
 
     fun postPayment(payment: Payment) {
+        println("postPayment")
         paymentRepo.save(payment)
     }
 
     fun postRequest(request: Request) {
+        println("postRequest")
         requestRepo.save(request)
     }
 
     fun postReset(code: String) {
+        println("postReset")
         println("Given code: " + code.substring(0, code.length - 1))
-        var transaction: Transaction = findTransactionByCode(code.substring(0, code.length - 1))
+        val transaction: Transaction = findTransactionByCode(code.substring(0, code.length - 1))
         println("Given id: " + transaction.transaction_id)
         paymentRepo.resetPayments(transaction.transaction_id)
     }
